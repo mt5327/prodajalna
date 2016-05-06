@@ -7,7 +7,7 @@ if (!process.env.PORT)
 
 // Priprava povezave na podatkovno bazo
 var sqlite3 = require('sqlite3').verbose();
-var pb = new sqlite3.Database('chinook.sl3');
+var pb = new sqlite3.Database('chinookvdvd.sl3');
 
 // Priprava strežnika
 var express = require('express');
