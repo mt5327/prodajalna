@@ -180,11 +180,11 @@ streznik.get('/izpisiRacun/:oblika', function(zahteva, odgovor) {
       odgovor.send("<p>V košarici nimate nobene pesmi, \
         zato računa ni mogoče pripraviti!</p>");
     } else {
-      odgovor.setHeader('content-type', 'text/xml');
-      odgovor.render('eslog', {
-        vizualiziraj: zahteva.params.oblika == 'html' ? true : false,
-        postavkeRacuna: pesmi
-      })  
+      vrniStranko(zahteva.session.stranka, function(napaka, stranka) {
+        odgovor.setHeader('content-type', 'text/xml');
+        odgovor.render('eslog', { vizualiziraj: zahteva.params.oblika == 'html' ? true : false,
+        strankaRacun: stranka, postavkeRacuna: pesmi}); 
+      })
     }
   })
 })
@@ -203,9 +203,8 @@ var vrniStranke = function(callback) {
   );
 }
 
-
 var vrniStranko = function(idStranke, callback) {
-  pb.all("SELECT FirstName, LastName FROM Customer WHERE \
+  pb.all("SELECT * FROM Customer WHERE \
           CustomerId =="+ idStranke,
       function(napaka, vrstica) {
         callback(napaka, vrstica);
