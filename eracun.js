@@ -210,14 +210,16 @@ streznik.post('/prijava', function(zahteva, odgovor) {
     	  Address, City, State, Country, PostalCode, \
     	  Phone, Fax, Email, SupportRepId) \
         VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
-        obvestilo = "Stranka je bila uspešno registrirana.";
         stmt.run(polja.FirstName, polja.LastName, polja.Company, polja.Address, polja.City, 
         polja.State, polja.Country, polja.PostalCode, polja.Phone, polja, polja.Email, 3); 
         stmt.finalize();
-        obvestilo = "Stranka je bila uspešno registrirana.";
     } catch (err) {
       napaka2 = true;
+    }
+    if (napaka2) {
       obvestilo = "Prišlo je do napake pri registraciji nove stranke. Prosim preverite vnešene podatke in poskusite znova.";
+    } else {
+      obvestilo = " Stranka je bila uspešno registrirana.";
     }
     odgovor.redirect("/prijava");
     odgovor.end();
